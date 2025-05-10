@@ -1,21 +1,23 @@
+// src/components/Header/Header.jsx
 import React, { useEffect, useState } from "react"
 import * as S from "./header.style"
 import Navbar from "../Navbar/Navbar"
 import Popover from "../Popover/Popover"
 import usePoperver from "src/hooks/usePoperver"
-import { useHistory } from "react-router"
 import useQuery from "src/hooks/useQuery"
 import { path } from "src/constants/path"
 import { useSelector } from "react-redux"
+// ↓ import useNavigate từ react-router-dom
+import { useNavigate } from "react-router-dom"
 
 function Header() {
   const { activePopover, hidePopover, showPopover } = usePoperver()
   const [searchValue, setSearchValue] = useState("")
 
-  const history = useHistory()
+  // ↓ khởi tạo navigate
+  const navigate = useNavigate()
 
   const query = useQuery()
-
   const purchases = useSelector(state => state.cart.purchases)
 
   useEffect(() => {
@@ -26,11 +28,12 @@ function Header() {
   const onChangeSearch = event => {
     setSearchValue(event.target.value)
   }
+
   const search = event => {
     event.preventDefault()
-    history.push(path.home + `?name=${searchValue}`)
+    // ↓ chuyển sang navigate thay vì history.push
+    navigate(path.home + `?name=${encodeURIComponent(searchValue)}`)
   }
-
   return (
     <S.StyledHeader>
       <div className="container">
