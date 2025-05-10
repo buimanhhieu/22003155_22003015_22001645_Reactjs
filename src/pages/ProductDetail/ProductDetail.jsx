@@ -1,7 +1,6 @@
-// src/pages/ProductDetail/ProductDetail.jsx
 import React, { useEffect, useMemo, useState } from "react"
 import { useDispatch } from "react-redux"
-import { useParams } from "react-router-dom"             // ← sửa ở đây
+import { useParams } from "react-router-dom"
 import { unwrapResult } from "@reduxjs/toolkit"
 import DOMPurify from "dompurify"
 import ProductQuantityController from "src/components/ProductQuantityController/ProductQuantityController"
@@ -20,31 +19,22 @@ function ProductDetail() {
   const [quantity, setQuantity] = useState(1)
 
   const dispatch = useDispatch()
-
-  // 1) Lấy slug mã hóa từ URL
   const { idProduct: rawSlug = "" } = useParams()
-  // 2) Giải mã percent-encoding
   const decoded = decodeURIComponent(rawSlug)
-  // 3) Tách chỉ phần ID phía sau "-i."
-  const realId = decoded.includes("-i.")
-    ? decoded.split("-i.").pop()
-    : decoded
+  const realId = decoded.includes("-i.") ? decoded.split("-i.").pop() : decoded
 
-  // Chuẩn bị mảng ảnh con cho slider
   const currentImages = useMemo(() => {
     return Array.isArray(product.images)
       ? product.images.slice(...currentIndexImages)
       : []
   }, [product.images, currentIndexImages])
 
-  // Fetch detail khi realId thay đổi
   useEffect(() => {
     if (!realId) return
 
     dispatch(getProductDetail(realId))
       .then(unwrapResult)
       .then(res => {
-        // res.data là object sản phẩm
         const data = res.data
         const imgs = Array.isArray(data.images)
           ? data.images.map((url, idx) => ({ url, id: idx }))
@@ -58,13 +48,18 @@ function ProductDetail() {
   }, [dispatch, realId])
 
   const chooseCurrentImage = img => setCurrentImage(img)
+
   const choosePrev = () => {
     if (currentIndexImages[0] > 0) {
       setCurrentIndexImages(([start, end]) => [start - 1, end - 1])
     }
   }
+
   const chooseNext = () => {
-    if (Array.isArray(product.images) && currentIndexImages[1] < product.images.length) {
+    if (
+      Array.isArray(product.images) &&
+      currentIndexImages[1] < product.images.length
+    ) {
       setCurrentIndexImages(([start, end]) => [start + 1, end + 1])
     }
   }
@@ -92,7 +87,6 @@ function ProductDetail() {
       {product._id && (
         <div className="container">
           <S.ProductBriefing>
-            {/* Ảnh sản phẩm */}
             <S.ProductImages>
               <S.ProductImageActive>
                 <img src={currentImage.url} alt={product.name} />
@@ -102,7 +96,7 @@ function ProductDetail() {
                 {currentImages.map(img => (
                   <S.ProductImage
                     key={img.id}
-                    active={currentImage.id === img.id}
+                    $active={currentImage.id === img.id}
                     onMouseEnter={() => chooseCurrentImage(img)}
                   >
                     <img src={img.url} alt="" />
@@ -112,7 +106,6 @@ function ProductDetail() {
               </S.ProductImagesSlider>
             </S.ProductImages>
 
-            {/* Thông tin sản phẩm */}
             <S.ProductMeta>
               <S.ProductTitle>{product.name}</S.ProductTitle>
               <S.ProductMeta1>
@@ -129,6 +122,7 @@ function ProductDetail() {
                   <span>Đã bán</span>
                 </S.ProductSold>
               </S.ProductMeta1>
+
               <S.ProductPrice>
                 <S.ProductPriceOriginal>
                   đ{product.price_before_discount?.toLocaleString()}
@@ -137,11 +131,7 @@ function ProductDetail() {
                   đ{product.price?.toLocaleString()}
                 </S.ProductPriceSale>
                 <S.ProductPriceSalePercent>
-                  {SalePercent(
-                    product.price_before_discount,
-                    product.price
-                  )}{" "}
-                  giảm
+                  {SalePercent(product.price_before_discount, product.price)} giảm
                 </S.ProductPriceSalePercent>
               </S.ProductPrice>
 
@@ -165,7 +155,6 @@ function ProductDetail() {
             </S.ProductMeta>
           </S.ProductBriefing>
 
-          {/* Mô tả chi tiết */}
           <S.ProductContent>
             <S.ProductContentHeading>Mô tả sản phẩm</S.ProductContentHeading>
             <S.ProductContentDetail

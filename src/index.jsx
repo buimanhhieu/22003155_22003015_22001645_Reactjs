@@ -7,13 +7,15 @@ import App from "./App"
 import store from "./store"
 import "./i18n/i18n"
 
+const basename = import.meta.env.BASE_URL // Lấy base URL từ vite.config.js
+
 const container = document.getElementById("root")
 const root = createRoot(container)
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <HelmetProvider>
           <App />
         </HelmetProvider>

@@ -1,10 +1,7 @@
-// src/pages/ProductDetail/productDetail.style.ts
-import { Button } from "src/assets/styles/utils"
-import {
-  RatingStarPercent,
-  RatingStarWrapper
-} from "src/components/ProductRating/productRating.style"
+// src/pages/ProductDetail/productDetail.style.js
 import styled from "styled-components"
+import { Button } from "src/assets/styles/utils"
+import { RatingStarPercent, RatingStarWrapper} from "src/components/ProductRating/productRating.style"
 
 export const ProductBriefing = styled.div`
   display: flex;
@@ -22,6 +19,7 @@ export const ProductImageActive = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
+
   img {
     width: 100%;
     height: 100%;
@@ -46,6 +44,7 @@ const ProductIconButton = styled.button`
   color: #fff;
   border: none;
   background-color: rgba(0, 0, 0, 0.2);
+
   svg {
     width: 2rem;
     height: 2rem;
@@ -57,8 +56,8 @@ export const ProductIconButtonPrev = styled(ProductIconButton)`
   left: 0;
 `
 
-// ※ Chú ý: dùng transient prop `$active` thay vì `active`
-export const ProductImage = styled.div<{ $active: boolean }>`
+// ✅ JavaScript version – sử dụng transient prop $active
+export const ProductImage = styled.div`
   padding: 0.5rem;
   height: 92px;
   width: 92px;
@@ -72,8 +71,7 @@ export const ProductImage = styled.div<{ $active: boolean }>`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border: 2px solid ${({ $active }) =>
-      $active ? "#ee4d2d" : "transparent"};
+    border: 2px solid ${({ $active }) => ($active ? "#ee4d2d" : "transparent")};
   }
 `
 
@@ -108,6 +106,7 @@ const ProductMeta1Item = styled.div`
   &:first-child {
     padding-left: 0;
   }
+
   &:last-child {
     padding-right: 0;
     border-right: 0;
@@ -121,10 +120,12 @@ export const ProductRating = styled(ProductMeta1Item)`
     font-size: 1.6rem;
     margin-right: 0.5rem;
   }
+
   ${RatingStarWrapper} svg {
     width: 1.4rem;
     height: 1.4rem;
   }
+
   ${RatingStarPercent} svg {
     color: #ee4d2d;
     fill: #ee4d2d;
@@ -138,6 +139,7 @@ export const ProductSold = styled(ProductMeta1Item)`
     margin-right: 5px;
     padding-bottom: 1px;
   }
+
   span:last-child {
     font-size: 1.4rem;
     color: #767676;
@@ -215,6 +217,7 @@ export const ProductButtons = styled(Button)`
     width: 2rem;
     height: 2rem;
   }
+
   &:hover {
     background: rgba(255, 87, 34, 0.15);
   }
