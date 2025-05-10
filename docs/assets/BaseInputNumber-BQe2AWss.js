@@ -1,1 +1,0 @@
-import{P as t,j as l}from"./index-C6_8q1gc.js";function c({onChange:a,value:s,onBlur:r,...o}){const u=n=>{const e=n.target.value;(/^\d+$/.test(e)||e==="")&&a&&a(e)},p=n=>{const e=n.target.value;r&&r(e)};return l.jsx("input",{type:"text",onChange:u,value:s,onBlur:p,...o})}c.propTypes={onChange:t.func,onBlur:t.func,value:t.oneOfType([t.string,t.number])};export{c as B};
