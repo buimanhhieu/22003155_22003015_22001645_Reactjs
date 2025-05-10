@@ -1,4 +1,4 @@
-import{d as r,B as o}from"./index-CUTTF5Og.js";const a=r.div`
+import{d as r,B as o}from"./index-DzK2o4QI.js";const a=r.div`
   background-color: rgba(238, 77, 45);
   min-width: max-content;
 `,e=r.div`
